@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cozone join</title>
+
+    <script>
+        const ROOM = "<%= room %>"
+        const NAME = "<%= name %>"
+        console.log(ROOM, NAME);
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #111;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .contextBox {
+            background: #151515;
+            box-shadow: 0px 4px 27px 6px rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            width: fit-content;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 45%;
+            border: 1px solid #292929;
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.192);
+            position: relative;
+            overflow: scroll;
+            height: 87%;
+        }
+
+        .contextBox input {
+            width: 96%;
+            background: #1B1B1B;
+            height: 36px;
+            border: 1px solid #292929;
+            box-sizing: border-box;
+            border-radius: 8px;
+            text-indent: 6px;
+            margin: 4px 0px;
+            outline: none;
+            color: white;
+        }
+
+        .contextBox h2 {
+            color: white !important;
+            text-align: center;
+            margin: 5px 5px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .buttonRow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 96%;
+            margin: 14px 0px;
+        }
+
+        .classic {
+            /* width: 100%; */
+            border: 1px solid #292929;
+            box-sizing: border-box;
+            height: 32px;
+            width: 170px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .classic:hover {
+            opacity: 0.6;
+            transition: .25s;
+        }
+
+        .dismiss {
+            background: #1B1B1B;
+            color: white;
+        }
+
+        .enable {
+            background: orange;
+            color: black;
+            font-weight: 500;
+        }
+
+        .contextHeader {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 100%;
+            background-color: #1f1f1f98;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            border-bottom: 1px solid #292929;
+            z-index: 3;
+            backdrop-filter: blur(25px);
+        }
+
+        ion-icon {
+            color: orange;
+            font-size: 22px;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .back-icon {
+            margin-left: 14px;
+            margin-top: 14px;
+        }
+
+        .info-icon {
+            margin-right: 14px;
+            margin-top: 14px;
+        }
+
+        ion-icon:hover {
+            opacity: 0.5;
+            transition: .25s;
+        }
+        
+        .contextHeader .centre {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin-top: 14px;
+        }
+
+        .centre h3 {
+            margin: 0;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #4f4f4f;
+        }
+
+        .centre img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            margin-bottom: 5px;
+            border-radius: 50%;
+        }
+
+        .contextControl {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 100%;
+            background-color: #1f1f1f98;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            border-top: 1px solid #292929;
+            z-index: 3;
+            padding-top: 10px;
+            backdrop-filter: blur(25px);
+        }
+
+        .contextControl input {
+            margin-left: 14px;
+            margin-bottom: 14px;
+            height: 40px;
+            border-radius: 10px;
+            text-indent: 8px;
+        }
+
+        .opacific {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            color: orange;
+            cursor: pointer;
+            font-weight: 500;
+            transition: .25s;
+            font-size: 15px;
+        }
+
+        .contextControl .opacific {
+            margin-bottom: 14px;
+            margin-right: 14px;
+            margin-left: 10px;
+        }
+
+        .opacific:hover {
+            opacity: 0.5;
+            transition: .25s;
+        }
+
+        .contextChat {
+            background-color: transparent;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 15px;
+            width: 100%;
+            height: 100%;
+            /* display: flex; */
+            display: inline-block;
+            align-items: flex-end;
+            flex-direction: column;
+            overflow: scroll;
+            justify-content: end;
+        }
+
+        .contextChat h1 {
+            color: orange;
+        }
+
+        .message:last-child {
+            margin-bottom: 80px;
+            /* background-color: rgb(145, 145, 145); */
+            height: fit-content;
+            position: relative;
+        }
+
+        .message:first-child {
+            margin-top: 120px;
+        }
+
+        .mine .sender {
+            display: none;
+        }
+
+        .message {
+            max-width: 42%;
+            margin: 5px 0px;
+            position: relative;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mine {
+            background-color: orange;
+            padding: 5px 10px;
+            border-radius: 9px;
+            margin-left: auto;
+            margin-right: 14px;
+            display: flex;
+            width: fit-content;
+            align-items: center;
+        }
+
+        .message .text {
+            font-weight: 500;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .mine .timestamp {
+            position: absolute;
+            left: -40px;
+            color: rgba(108, 108, 108, 0.864);
+            font-size: 12px;
+        }
+
+        .other .text {
+            background-color: rgb(39, 39, 39);
+            padding: 7px 10px;
+            border-radius: 10px;
+            margin-right: auto;
+            margin-left: 14px;
+            display: flex;
+            color: white;
+            align-items: center;
+        }
+
+        .other .info {
+            /* position: absolute; */
+            /* right: -85px; */
+            font-size: 13px;
+        }
+
+        .info .sender {
+            color: white;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .info .timestamp {
+            color: gray;
+        }
+
+        .other .text {
+            font-weight: 300;
+        }
+
+        .global {
+            background-color: rgb(10, 10, 10);
+            font-size: 12px;
+            font-weight: 200;
+            width: fit-content;
+            padding: 3px 9px;
+            border-radius: 7px;
+            color: white;
+            margin: 15px auto;
+            border: 1px solid #292929;
+        }
+
+</style>
+
+</head>
+<body>
+    <div class="contextBox">
+        <div class="contextHeader">
+            <ion-icon name="chevron-back-outline" class="back-icon"></ion-icon>
+            <div class="centre">
+                <img src="632832.png" alt="logo">
+                <h3>group name</h3>
+                <small>Arnav is typing...</small>
+            </div>
+            <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
+        </div>
+        <div class="contextControl">
+            <input type="text" placeholder="Send a message">
+            <button class="opacific">Send</button>
+        </div>
+        
+        <div class="contextChat" id="contextChat">
+            <div class="message other">
+                <div class="info">
+                    <div class="sender">Arnav Jain</div>
+                    <div class="timestamp">09:45</div>
+                </div>
+                <p class="text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+                    molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
+                    numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
+                    optio, eaque rerum! Provident 
+                </p>
+            </div>
+            <div class="message mine">
+                <div class="sender">Arnav Jain</div>
+                <div class="timestamp">09:45</div>
+                <p class="text">This is the message i'm thinking of...</p>
+            </div>
+            <div class="global">
+                <span>Arnav has joined the chat</span>
+            </div>
+            <div class="message mine">
+                <div class="sender">Arnav Jain</div>
+                <div class="timestamp">09:45</div>
+                <p class="text">This is the message i'm thinking of...</p>
+            </div>
+            <div class="hint">
+                <span>Arnav</span> is typing
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
