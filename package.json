@@ -1,0 +1,32 @@
+{
+  "name": "cozone",
+  "version": "1.2.0",
+  "description": "��#\u0000 \u0000c\u0000o\u0000z\u0000o\u0000n\u0000e\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arnavjainn06/cozone.git"
+  },
+  "author": "Arnav Jain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arnavjainn06/cozone/issues"
+  },
+  "homepage": "https://github.com/arnavjainn06/cozone#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "path": "^0.12.7",
+    "qs": "^6.10.3",
+    "random-word-pairs": "^1.0.5",
+    "socket.io": "^4.4.1",
+    "uuid": "^8.3.2"
+  }
+}
