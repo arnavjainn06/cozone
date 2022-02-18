@@ -107,7 +107,7 @@
 </head>
 <body>
     <div class="contextBox">
-        <h2>Enter your name</h2>
+        <h2 id="roomholder">Joining Room</h2>
         <input autofocus id="name" type="text" placeholder="Enter your name here">
         <div class="buttonRow">
             <button id="cancel" class="classic dismiss">Cancel</button>
@@ -125,6 +125,10 @@
         const cancel = document.getElementById("cancel");
         const joinBtn = document.getElementById("joinBtn");
 
+        const roomHolder = document.getElementById("roomholder");
+
+        roomHolder.innerText = `Joining ${ROOM}`;
+
         joinBtn.addEventListener("click", () => {
             let pointName = name.value;
 
@@ -132,6 +136,19 @@
                 // socket.emit("entrypoint", ROOM, pointName);
                 window.location.pathname = `/room-primary/${pointName}/${ROOM}`;
             }       
+        });
+
+        name.addEventListener("keypress", (e) => {
+            if (e.which === 13 || e.keyCode === 13) {
+                if (name.value !== "")  {
+                    let pointName = name.value;
+
+                    if (pointName !== "") {
+                        // socket.emit("entrypoint", ROOM, pointName);
+                        window.location.pathname = `/room-primary/${pointName}/${ROOM}`;
+                    }       
+                }
+            }
         });
         // socket.on("info", ())
     </script>

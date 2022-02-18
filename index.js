@@ -21,7 +21,7 @@ const {
 } = require("./functions/backControls");
 
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.use(express.static("views"));
 
 // Null Indexed
 app.get("/", (req, res) => {

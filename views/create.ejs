@@ -97,12 +97,19 @@
             color: black;
             font-weight: 500;
         }
+
+        small {
+            color: gray;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
 </style>
 
 </head>
 <body>
     <div class="contextBox">
         <h2>Create A Chat Room</h2>
+        <small>We will be adding a few digits to the name to secure the room</small>
         <!-- <input id="name" type="text" placeholder="Enter your name here"> -->
         <input autofocus id="room" type="text" placeholder="Enter chat room name here">
         <div class="buttonRow">
@@ -123,13 +130,35 @@
         const create = document.getElementById("create");
 
         create.addEventListener("click", () => {
+            var val = Math.floor(1000 + Math.random() * 9000);
+            // console.log(val);
+            
             // let pointName = name.value;
-            let pointRoom = room.value;
+            let pointRoomVal = `${room.value}${val}`;
+            let pointRoom = `${room.value}`;
 
             if (pointRoom !== "") {
                 // socket.emit("entrypoint", room);
-                window.location.pathname = `/join/${pointRoom}`;
-            }       
+                window.location.pathname = `/join/${pointRoomVal}`;
+            }
+        });
+
+        room.addEventListener("keypress", (e) => {
+            if (e.which === 13 || e.keyCode === 13) {
+                if (room.value !== "")  {
+                    var val = Math.floor(1000 + Math.random() * 9000);
+                    // console.log(val);
+                    
+                    // let pointName = name.value;
+                    let pointRoomVal = `${room.value}${val}`;
+                    let pointRoom = `${room.value}`;
+
+                    if (pointRoom !== "") {
+                        // socket.emit("entrypoint", room);
+                        window.location.pathname = `/join/${pointRoomVal}`;
+                    }
+                }
+            }
         });
         // socket.on("info", ())
     </script>

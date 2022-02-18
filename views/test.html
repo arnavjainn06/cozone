@@ -6,12 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cozone join</title>
 
-    <script>
-        const ROOM = "<%= room %>"
-        const NAME = "<%= name %>"
-        console.log(ROOM, NAME);
-    </script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -22,16 +16,21 @@
     <style>
         * {
             font-family: 'Poppins', sans-serif;
+            padding: 0;
+            margin: 0;
         }
 
         body {
             background-color: #111;
             width: 100vw;
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            /* display: flex; */
+            /* align-items: center; */
+            /* justify-content: center; */
+            /* overflow: hidden; */
+            background-image: url("./Frame\ 4.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
 
         .contextBox {
@@ -47,7 +46,7 @@
             border: 1px solid #292929;
             box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.192);
             position: relative;
-            overflow: hid;
+            overflow: visible;
             height: 87%;
         }
 
@@ -107,95 +106,6 @@
             font-weight: 500;
         }
 
-        .contextHeader {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            width: 100%;
-            background-color: #1f1f1f98;
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            border-bottom: 1px solid #292929;
-            z-index: 3;
-            backdrop-filter: blur(25px);
-            transition: height 0.4s;
-        }
-
-        ion-icon {
-            color: orange;
-            font-size: 22px;
-            cursor: pointer;
-            transition: .25s;
-        }
-
-        .back-icon {
-            margin-left: 14px;
-            margin-top: 14px;
-        }
-
-        .info-icon {
-            margin-right: 14px;
-            margin-top: 14px;
-        }
-
-        ion-icon:hover {
-            opacity: 0.5;
-            transition: .25s;
-        }
-        
-        .contextHeader .centre {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            margin-top: 14px;
-        }
-
-        .centre h3 {
-            margin: 0;
-            font-weight: 500;
-            margin-bottom: 6px;
-            color: #4f4f4f;
-            font-size: 13px;
-        }
-
-        .centre img {
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            margin-bottom: 5px;
-            border-radius: 50%;
-        }
-
-        .contextControl {
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-            width: 100%;
-            background-color: #1f1f1f98;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            border-top: 1px solid #292929;
-            z-index: 3;
-            padding-top: 10px;
-            backdrop-filter: blur(25px);
-        }
-
-        .contextControl input {
-            margin-left: 14px;
-            margin-bottom: 14px;
-            height: 40px;
-            border-radius: 10px;
-            text-indent: 8px;
-        }
-
         .opacific {
             background-color: transparent;
             border: none;
@@ -204,13 +114,11 @@
             cursor: pointer;
             font-weight: 500;
             transition: .25s;
-            font-size: 15px;
-        }
-
-        .contextControl .opacific {
-            margin-bottom: 14px;
-            margin-right: 14px;
-            margin-left: 10px;
+            font-size: 13px;
+            padding: 7px 17px;
+            text-decoration: none;
+            border-radius: 100px;
+            background-color: rgba(255, 166, 0, 0.122);
         }
 
         .opacific:hover {
@@ -218,232 +126,144 @@
             transition: .25s;
         }
 
-        .contextChat {
-            background-color: transparent;
-            position: absolute;
-            left: 0;
-            top: 0;
-            border-radius: 15px;
-            width: 100%;
-            height: 100%;
-            /* display: flex; */
-            display: inline-block;
-            align-items: flex-end;
-            flex-direction: column;
-            overflow: scroll;
-            justify-content: end;
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4vh 4vw;
         }
 
-        .contextChat h1 {
+        header h2 {
             color: orange;
         }
 
-        .message:last-child {
-            margin-bottom: 80px;
-            /* background-color: rgb(145, 145, 145); */
-            height: fit-content;
-            position: relative;
+        h1 {
+            font-size: 45px;
+            color: white;
+            line-height: 45px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 60px;
         }
 
-        .message:first-child {
-            margin-top: 120px;
+        img {
+            width: 850px;
+            margin: auto;
+            display: block;
+            margin-top: 20px;
         }
 
-        .mine .sender {
-            display: none;
-        }
-
-        @keyframes animator {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .message {
-            max-width: 42%;
-            margin: 5px 0px;
-            position: relative;
-        }
-
-        ::-webkit-scrollbar {
-            display: none;
-        }
-
-        .mine {
-            background-color: orange;
-            padding: 5px 10px;
-            border-radius: 9px;
-            margin-left: auto;
-            margin-right: 14px;
+        .pros-grid {
             display: flex;
-            width: fit-content;
             align-items: center;
-            /* animation: animator 0.8s; */
+            justify-content: space-evenly;
+            margin: 60px 0px;
+            padding-bottom: 50px;
         }
 
-        .message .text {
+        .pro {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #292929;
+            color: rgba(255, 255, 255, 0.415);
+            text-align: center;
+            border-radius: 16px;
+            background-color: rgba(17, 17, 17, 0.285);
+        }
+
+        .pro h3 {
             font-weight: 500;
-            font-size: 14px;
-            margin: 0;
+            font-size: 20px;
+            color: rgba(249, 252, 255, 0.505);
         }
 
-        .mine .timestamp {
-            position: absolute;
-            left: -40px;
-            color: rgba(108, 108, 108, 0.864);
-            font-size: 12px;
-        }
-
-        .other {
-            background-color: rgb(39, 39, 39);
-            padding: 7px 10px;
-            border-radius: 10px;
-            margin-right: auto;
-            margin-left: 14px;
-            display: flex;
-            color: white;
-            align-items: center;
-            width: fit-content;
-            position: relative;
-        }
-
-        .other .info {
-            position: absolute;
-            /* right: -5%; */
-            font-size: 13px;
-            margin-left: 100%;
-        }
-
-        .info .sender {
-            color: white;
-            font-size: 12px;
-            font-weight: 400;
-        }
-
-        .info .timestamp {
-            color: gray;
-        }
-
-        .other .text {
+        .pro p {
             font-weight: 300;
         }
 
-        .global {
-            background-color: rgb(10, 10, 10);
-            font-size: 12px;
-            font-weight: 200;
-            width: fit-content;
-            padding: 3px 9px;
-            border-radius: 7px;
-            color: white;
-            margin: 15px auto;
-            border: 1px solid #292929;
+        @media (max-width: 1196px) {
+            .pros-grid {
+                flex-direction: column;
+            }
+
+            .pro {
+                margin: 20px 0px;
+            }
+
+            img {
+                width: 800px;
+            }
         }
 
-        small {
-            color: gray;
-            font-weight: 400;
-            font-size: 9px;
-            margin: 0;
+        @media (max-width: 850px) {
+            img {
+                width: 650px;
+            }
+
+            h1 {
+                font-size: 35px;
+            }
+
+            .pro {
+                width: 80%;
+            }
         }
 
-        #small-holder {
-            transform: translateY(-10px);
-            /* height: 4px; */
+        @media (max-width: 650px) {
+            img {
+                width: 500px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
         }
 
-        .popup {
-            position: absolute;
-            background-color: rgb(23, 23, 23);
-            color: white;
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
-            right: -90px;
-            width: 200px;
-            top: 56px;
-            padding: 10px 15px;
-            border-radius: 10px;
-            border: 1px solid #292929;
-            display: none;
-        }
+        @media (max-width: 550px) {
+            img {
+                width: 350px;
+            }
 
-        .popup h3 {
-            margin: 0;
-            font-weight: 500;
-            font-size: 17px;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .pars {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 10px 0px;
-        }
-
-        .arrow-up {
-            width: 0; 
-            height: 0; 
-            border-left: 13px solid transparent;
-            border-right: 13px solid transparent;
-            
-            border-bottom: 13px solid rgb(23, 23, 23);
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
-            position: absolute;
-            top: -9px;
-            z-index: 20;
-            z-index: 2;
-            display: flex;
-            display: block;
-            left: 0;
-            right: 0;
-            /* margin-left: 2px; */
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .pars li {
-            list-style: none;
-            color: rgb(57, 57, 57);
+            h1 {
+                font-size:20px;
+                line-height: 20px;
+            }
         }
 </style>
 
 </head>
 <body>
-    <div class="contextBox">
-        <div class="contextHeader">
-            <ion-icon onclick="leave()" name="chevron-back-outline" class="back-icon"></ion-icon>
-            <div class="centre" id="centre">
-                <img src="https://picsum.photos/200" alt="logo">
-                <h3 id="chat-title">group name</h3>
-                <div id="small-holder" class="collapsible"></div>
-            </div>
-            <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
-            <div class="popup">
-                <div class="arrow-up"></div>
-                <h3>Participants</h3>
-                <div class="pars">
-                    <li>29je2</li>
-                    <li>29je2</li>
-                    <li>29je2</li>
-                    <li>29je2</li>
-                    <li>29je2</li>
-                </div>
-            </div>
-        </div>
-        <div class="contextControl">
-            <input id="inputMain" type="text" placeholder="Send a message">
-            <button class="opacific">Send</button>
-        </div>
-        
-        <div class="contextChat" id="contextChat"></div>
-    </div>
+    <!-- <div class="contextBox"> -->
+    <!-- </div> -->
 
+    <header>
+        <h2>cozone</h2>
+        <a class="opacific" href="/create">Create Room</a>
+    </header>
+
+    <h1>Beautiful, Elegant & Easy-to-use <br> chat rooms</h1>
+
+    <img src="./chatroom.svg" alt="chatroom-svg">
+
+    <div class="pros-grid">
+        <div class="pro">
+            <h3>Secure & Encrypted</h3>
+            <p>
+                Your messages are visible
+                to you and other participants only. And they
+                will be deleted once the last participant leaves
+                the chat
+            </p>
+        </div>
+        <div class="pro">
+            <h3>Easy To Use</h3>
+            <p>
+                Your messages are visible
+                to you and other participants only. And they
+                will be deleted once the last participant leaves
+                the chat
+            </p>
+        </div>
+    </div>
 </body>
 </html>

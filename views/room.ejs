@@ -435,6 +435,20 @@
         .theme-by-text {
             color: orange;
         }
+
+        .popup .opacific {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 400;
+            display: flex;
+            margin: auto;
+            align-items: center;
+        }
+
+        .opacific ion-icon {
+            font-size: 15px;
+            margin-right: 5px;
+        }
 </style>
 
 </head>
@@ -450,9 +464,10 @@
             <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
             <div class="popup">
                 <div class="arrow-up"></div>
-                <h3>Participants</h3>
+                <h3 id="pars-num">Participants</h3>
                 <div class="pars" id="pars">
                 </div>
+                <button style="text-align: center;" class="opacific" id="copy-btn"> <ion-icon name="copy-outline"></ion-icon> <span>Copy Invite Link</span></button>
             </div>
         </div>
         <div class="contextControl">
@@ -471,6 +486,7 @@
         socket.emit("join-room", ROOM, NAME);
 
         const chatTitle = document.getElementById("chat-title");
+        const parsNum = document.getElementById("pars-num");
 
         chatTitle.innerText = ROOM;
 
@@ -494,6 +510,24 @@
             socket.emit("leaving", NAME);
             window.location.pathname = "/create";
         }
+
+        const copyBtn = document.getElementById("copy-btn");
+
+        copyBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(window.location.href);
+            copyBtn.innerHTML =
+            `
+            <ion-icon style="color: green" name="checkmark-circle-outline"></ion-icon>
+            <span style="color: green">Copied</span>
+            `;
+
+            setTimeout(() => {
+                copyBtn.innerHTML =
+                `
+                <button style="text-align: center;" class="opacific" id="copy-btn"> <ion-icon name="copy-outline"></ion-icon> <span>Copy Invite Link</span></button>
+                `;
+            }, 3000)
+        });
 
         inputMain.addEventListener("keypress", (e) => {
             if (e.which === 13 || e.keyCode === 13) {
@@ -520,7 +554,7 @@
                 contextChat.innerHTML += 
                 `
                 <div class="global message">
-                    <span>You have joined the chat</span>    
+                    <span>You joined the chat</span>    
                 </div>
                 `
             }
@@ -616,6 +650,7 @@
         const pars = document.getElementById("pars");
 
         socket.on("users", list => {
+            parsNum.innerText = `Participants (${list.length})`;
             pars.innerHTML = "";
             list.map((item) => {
                 if (item.name !== NAME) {
