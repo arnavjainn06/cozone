@@ -137,7 +137,7 @@
             let pointRoomVal = `${room.value}${val}`;
             let pointRoom = `${room.value}`;
 
-            if (pointRoom !== "") {
+            if (room.value !== "" && room.value.trim().length !== 0)  {
                 // socket.emit("entrypoint", room);
                 window.location.pathname = `/join/${pointRoomVal}`;
             }
@@ -145,7 +145,7 @@
 
         room.addEventListener("keypress", (e) => {
             if (e.which === 13 || e.keyCode === 13) {
-                if (room.value !== "")  {
+                if (room.value !== "" && room.value.trim().length !== 0)  {
                     var val = Math.floor(1000 + Math.random() * 9000);
                     // console.log(val);
                     

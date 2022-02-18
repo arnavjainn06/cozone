@@ -472,7 +472,7 @@
         </div>
         <div class="contextControl">
             <input id="inputMain" type="text" placeholder="Send a message">
-            <button class="opacific">Send</button>
+            <button class="opacific" id="send-btn">Send</button>
         </div>
         
         <div class="contextChat" id="contextChat"></div>
@@ -487,6 +487,7 @@
 
         const chatTitle = document.getElementById("chat-title");
         const parsNum = document.getElementById("pars-num");
+        const sendBtn = document.getElementById("send-btn");
 
         chatTitle.innerText = ROOM;
 
@@ -531,7 +532,7 @@
 
         inputMain.addEventListener("keypress", (e) => {
             if (e.which === 13 || e.keyCode === 13) {
-                if (e.target.value !== "")  {
+                if (e.target.value !== "" && e.target.value.trim().length !== 0) {
                     socket.emit("send", {
                         timestamp: getTime(),
                         sender: NAME,
