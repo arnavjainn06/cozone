@@ -16,6 +16,9 @@
   "bugs": {
     "url": "https://github.com/arnavjainn06/cozone/issues"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "homepage": "https://github.com/arnavjainn06/cozone#readme",
   "devDependencies": {
     "nodemon": "^2.0.15"
