@@ -543,6 +543,17 @@
             }
         });
 
+        sendBtn.addEventListener("click", () => {
+            if (inputMain.value !== "" && inputMain.value.trim().length !== 0) {
+                    socket.emit("send", {
+                        timestamp: getTime(),
+                        sender: NAME,
+                        text: inputMain.value
+                    });
+                    inputMain.value = '';
+            }
+        });
+
         socket.on("new-connection", (name) => {
             if (name !== NAME) {
                 contextChat.innerHTML += 
