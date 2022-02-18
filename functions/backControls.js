@@ -22,9 +22,18 @@ function getUsersByRoom(room) {
     return byRoomUsers;
 }
 
+function queryUser(id) {
+    let index = users.findIndex((user) => user.id === id);
+
+    if (index !== -1) {
+        return users[index].name;
+    }
+}
+
 module.exports = {
     newUser,
     getGlobalUsers,
     userExit,
     getUsersByRoom,
+    queryUser,
 };

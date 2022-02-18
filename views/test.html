@@ -47,7 +47,7 @@
             border: 1px solid #292929;
             box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.192);
             position: relative;
-            overflow: scroll;
+            overflow: hid;
             height: 87%;
         }
 
@@ -121,6 +121,7 @@
             border-bottom: 1px solid #292929;
             z-index: 3;
             backdrop-filter: blur(25px);
+            transition: height 0.4s;
         }
 
         ion-icon {
@@ -157,8 +158,9 @@
         .centre h3 {
             margin: 0;
             font-weight: 500;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             color: #4f4f4f;
+            font-size: 13px;
         }
 
         .centre img {
@@ -251,6 +253,17 @@
             display: none;
         }
 
+        @keyframes animator {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         .message {
             max-width: 42%;
             margin: 5px 0px;
@@ -270,6 +283,7 @@
             display: flex;
             width: fit-content;
             align-items: center;
+            /* animation: animator 0.8s; */
         }
 
         .message .text {
@@ -285,7 +299,7 @@
             font-size: 12px;
         }
 
-        .other .text {
+        .other {
             background-color: rgb(39, 39, 39);
             padding: 7px 10px;
             border-radius: 10px;
@@ -294,17 +308,20 @@
             display: flex;
             color: white;
             align-items: center;
+            width: fit-content;
+            position: relative;
         }
 
         .other .info {
-            /* position: absolute; */
-            /* right: -85px; */
+            position: absolute;
+            /* right: -5%; */
             font-size: 13px;
+            margin-left: 100%;
         }
 
         .info .sender {
             color: white;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 400;
         }
 
@@ -328,55 +345,104 @@
             border: 1px solid #292929;
         }
 
+        small {
+            color: gray;
+            font-weight: 400;
+            font-size: 9px;
+            margin: 0;
+        }
+
+        #small-holder {
+            transform: translateY(-10px);
+            /* height: 4px; */
+        }
+
+        .popup {
+            position: absolute;
+            background-color: rgb(23, 23, 23);
+            color: white;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+            right: -90px;
+            width: 200px;
+            top: 56px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid #292929;
+            display: none;
+        }
+
+        .popup h3 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 17px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .pars {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0px;
+        }
+
+        .arrow-up {
+            width: 0; 
+            height: 0; 
+            border-left: 13px solid transparent;
+            border-right: 13px solid transparent;
+            
+            border-bottom: 13px solid rgb(23, 23, 23);
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+            position: absolute;
+            top: -9px;
+            z-index: 20;
+            z-index: 2;
+            display: flex;
+            display: block;
+            left: 0;
+            right: 0;
+            /* margin-left: 2px; */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pars li {
+            list-style: none;
+            color: rgb(57, 57, 57);
+        }
 </style>
 
 </head>
 <body>
     <div class="contextBox">
         <div class="contextHeader">
-            <ion-icon name="chevron-back-outline" class="back-icon"></ion-icon>
-            <div class="centre">
-                <img src="632832.png" alt="logo">
-                <h3>group name</h3>
-                <small>Arnav is typing...</small>
+            <ion-icon onclick="leave()" name="chevron-back-outline" class="back-icon"></ion-icon>
+            <div class="centre" id="centre">
+                <img src="https://picsum.photos/200" alt="logo">
+                <h3 id="chat-title">group name</h3>
+                <div id="small-holder" class="collapsible"></div>
             </div>
             <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
+            <div class="popup">
+                <div class="arrow-up"></div>
+                <h3>Participants</h3>
+                <div class="pars">
+                    <li>29je2</li>
+                    <li>29je2</li>
+                    <li>29je2</li>
+                    <li>29je2</li>
+                    <li>29je2</li>
+                </div>
+            </div>
         </div>
         <div class="contextControl">
-            <input type="text" placeholder="Send a message">
+            <input id="inputMain" type="text" placeholder="Send a message">
             <button class="opacific">Send</button>
         </div>
         
-        <div class="contextChat" id="contextChat">
-            <div class="message other">
-                <div class="info">
-                    <div class="sender">Arnav Jain</div>
-                    <div class="timestamp">09:45</div>
-                </div>
-                <p class="text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-                    molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-                    numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-                    optio, eaque rerum! Provident 
-                </p>
-            </div>
-            <div class="message mine">
-                <div class="sender">Arnav Jain</div>
-                <div class="timestamp">09:45</div>
-                <p class="text">This is the message i'm thinking of...</p>
-            </div>
-            <div class="global">
-                <span>Arnav has joined the chat</span>
-            </div>
-            <div class="message mine">
-                <div class="sender">Arnav Jain</div>
-                <div class="timestamp">09:45</div>
-                <p class="text">This is the message i'm thinking of...</p>
-            </div>
-            <div class="hint">
-                <span>Arnav</span> is typing
-            </div>
-        </div>
+        <div class="contextChat" id="contextChat"></div>
     </div>
 
 </body>

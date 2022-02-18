@@ -17,6 +17,7 @@ const {
     getGlobalUsers,
     userExit,
     getUsersByRoom,
+    queryUser,
 } = require("./functions/backControls");
 
 app.set("view engine", "ejs");
@@ -25,6 +26,10 @@ app.use(express.static("public"));
 // Null Indexed
 app.get("/", (req, res) => {
     res.redirect(`/create`);
+});
+
+app.get("/docs", (req, res) => {
+    res.render("docs");
 });
 
 // Creation entrypoint
@@ -76,13 +81,22 @@ io.on("connection", function (socket) {
     });
 
     socket.on("typing-out", (sender) => {
-        console.log(`${sender} is typing...`);
         io.to(ROOM).emit("typing-in", sender);
     });
 
     socket.on("typing-stopped", () => {
-        console.log("tpying stopped!");
         io.to(ROOM).emit("hide-typing");
+    });
+
+    socket.on("disconnect", () => {
+        const name = queryUser(socket.id);
+
+        if (name !== undefined) {
+            console.log(`${name} disconnected...`);
+            userExit(socket.id);
+            io.to(ROOM).emit("users", getUsersByRoom(ROOM));
+            io.to(ROOM).emit("disconnection", name);
+        }
     });
 });
 

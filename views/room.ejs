@@ -47,7 +47,7 @@
             border: 1px solid #292929;
             box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.192);
             position: relative;
-            overflow: scroll;
+            overflow: visible;
             height: 87%;
         }
 
@@ -264,6 +264,15 @@
             }
         }
 
+        @keyframes animatorInverse {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
         .message {
             max-width: 42%;
             margin: 5px 0px;
@@ -294,7 +303,7 @@
 
         .mine .timestamp {
             position: absolute;
-            left: -40px;
+            left: -45px;
             color: rgba(108, 108, 108, 0.864);
             font-size: 12px;
         }
@@ -314,18 +323,28 @@
 
         .other .info {
             position: absolute;
-            right: -45px;
+            /* right: -5%; */
             font-size: 13px;
+            display: flex;
+            align-items: center;
+            margin-left: 100%;
         }
 
         .info .sender {
             color: white;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 400;
+            margin-right: 5px;
         }
 
         .info .timestamp {
             color: gray;
+            font-size: 11px;
+            margin-left: 5px;
+        }
+
+        .info {
+            color: rgb(61, 61, 61);
         }
 
         .other .text {
@@ -355,6 +374,67 @@
             transform: translateY(-10px);
             /* height: 4px; */
         }
+
+        .popup {
+            position: absolute;
+            background-color: rgb(23, 23, 23);
+            color: white;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+            right: -90px;
+            width: 200px;
+            top: 56px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid #292929;
+            display: none;
+            animation: animator 0.5s;
+        }
+
+        .popup h3 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 17px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .pars {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0px;
+        }
+
+        .arrow-up {
+            width: 0; 
+            height: 0; 
+            border-left: 13px solid transparent;
+            border-right: 13px solid transparent;
+            
+            border-bottom: 13px solid rgb(23, 23, 23);
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+            position: absolute;
+            top: -10px;
+            z-index: 20;
+            z-index: 2;
+            display: flex;
+            display: block;
+            left: 0;
+            right: 0;
+            /* margin-left: 2px; */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pars li {
+            list-style: none;
+            color: rgb(57, 57, 57);
+        }
+
+        .theme-by-text {
+            color: orange;
+        }
 </style>
 
 </head>
@@ -363,11 +443,17 @@
         <div class="contextHeader">
             <ion-icon onclick="leave()" name="chevron-back-outline" class="back-icon"></ion-icon>
             <div class="centre" id="centre">
-                <img src="https://images.unsplash.com/photo-1507629221898-576a56b530bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8NnwxMjc4MDQ2fHxlbnwwfHx8fA%3D%3D&w=1000&q=80" alt="logo">
+                <img src="https://picsum.photos/200" alt="logo">
                 <h3 id="chat-title">group name</h3>
                 <div id="small-holder" class="collapsible"></div>
             </div>
             <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
+            <div class="popup">
+                <div class="arrow-up"></div>
+                <h3>Participants</h3>
+                <div class="pars" id="pars">
+                </div>
+            </div>
         </div>
         <div class="contextControl">
             <input id="inputMain" type="text" placeholder="Send a message">
@@ -455,8 +541,7 @@
                 `
                 <div class="message other">
                     <div class="info">
-                        <div class="sender">${data.sender}</div>
-                        <div class="timestamp">${data.timestamp}</div>
+                        <div class="sender">${data.sender} </div> | <div class="timestamp"> ${data.timestamp}</div>
                     </div>
                     <p class="text">
                         ${data.text}
@@ -475,15 +560,10 @@
             }
         });
 
-        socket.on("users", list => {
-            console.log(list);
-        });
-
         let timer;
         const waitTime = 1000;
 
         socket.on("typing-in", (sender) => {
-            console.log(sender + " is typing");
             if (sender !== NAME) {
                 chatTitle.style.marginBottom = "6px";
                 document.getElementById("small-holder").innerHTML = 
@@ -494,7 +574,6 @@
         });
 
         socket.on("hide-typing", () => {
-            console.log("typing hidden");
             const hint = document.getElementsByClassName("typer");
             chatTitle.style.marginBottom = "14px";
 
@@ -515,6 +594,43 @@
             timer = window.setTimeout(() => {
                 socket.emit("typing-stopped");
             }, waitTime);
+        });
+
+        let infoIcon = document.querySelector(".info-icon");
+        let tooltip = document.querySelector(".popup");
+
+        infoIcon.addEventListener("click", () => {
+            if (tooltip.style.display !== "block") {
+                tooltip.style.display = "block";
+                infoIcon.setAttribute("name", "close-circle-outline");
+            } else {
+                tooltip.style.animation = "animatorInverse 0.5s";
+                setTimeout(() => {
+                    tooltip.style.display = "none";
+                    infoIcon.setAttribute("name", "information-circle-outline");
+                    tooltip.style.animation = "animator 0.5s";
+                }, 500);
+            }
+        });
+
+        const pars = document.getElementById("pars");
+
+        socket.on("users", list => {
+            pars.innerHTML = "";
+            list.map((item) => {
+                if (item.name !== NAME) {
+                    pars.innerHTML +=
+                    `
+                    <li class="theme-by-text">${item.name}</li>
+                    `
+                } else {
+                    pars.innerHTML +=
+                    `
+                    <li>You</li>
+                    `
+                }
+            });
+            // console.log(list);
         });
 
     </script>
